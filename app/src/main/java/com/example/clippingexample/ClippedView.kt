@@ -1,6 +1,8 @@
 package com.example.clippingexample
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -43,4 +45,83 @@ class ClippedView @JvmOverloads constructor(
     private val rowThree = rowTwo + rectInset + clipRectBottom
     private val rowFour = rowThree + rectInset + clipRectBottom
     private val textRow = rowFour + (1.5f * clipRectBottom)
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+
+        drawBackAndUnclippedRectangle(canvas)
+        drawDifferenceClippingExample(canvas)
+        drawCircularClippingExample(canvas)
+        drawIntersectionClippingExample(canvas)
+        drawCombinedClippingExample(canvas)
+        drawRoundedRectangleClippingExample(canvas)
+        drawOutsideClippingExample(canvas)
+        drawSkewedTextExample(canvas)
+        drawTranslatedTextExample(canvas)
+        // drawQuickRejectExample(canvas)
+    }
+
+    private fun drawClippedRectangle(canvas: Canvas){
+        // Create the clip rectangle area
+        canvas.clipRect(clipRectLeft, clipRectTop, clipRectRight, clipRectBottom)
+        canvas.drawColor(Color.WHITE)
+
+        // Provide start and end coordinates, as well as paint
+        paint.color = Color.RED
+        canvas.drawLine(clipRectLeft, clipRectTop, clipRectRight, clipRectBottom, paint)
+
+        // Provide circle center, radius, paint
+        paint.color = Color.GREEN
+        canvas.drawCircle(circleRadius,clipRectBottom - circleRadius, circleRadius,paint)
+
+        // Text is drawn to the left of the x,y origin (to the right edge of the rectangle)
+        paint.color = Color.BLUE
+        paint.textSize = textSize
+        paint.textAlign = Paint.Align.RIGHT
+        canvas.drawText(context.getString(R.string.clipping), clipRectRight, textOffset, paint)
+
+    }
+
+    private fun drawBackAndUnclippedRectangle(canvas: Canvas) {
+        canvas.drawColor(Color.GRAY)
+        canvas.save()
+        // Here we move (translate) the canvas
+        canvas.translate(columnOne, rowOne)
+        drawClippedRectangle(canvas)
+        // restore removes the modifications (like translate, rotate, scale), not the drawing. In
+        // other words, it resets the state of the canvas
+        canvas.restore()
+    }
+
+    private fun drawDifferenceClippingExample(canvas: Canvas) {
+
+    }
+
+    private fun drawCircularClippingExample(canvas: Canvas) {
+
+    }
+
+    private fun drawIntersectionClippingExample(canvas: Canvas) {
+
+    }
+
+    private fun drawCombinedClippingExample(canvas: Canvas) {
+
+    }
+
+    private fun drawRoundedRectangleClippingExample(canvas: Canvas) {
+
+    }
+
+    private fun drawOutsideClippingExample(canvas: Canvas) {
+
+    }
+
+    private fun drawSkewedTextExample(canvas: Canvas) {
+
+    }
+
+    private fun drawTranslatedTextExample(canvas : Canvas) {
+
+    }
 }
